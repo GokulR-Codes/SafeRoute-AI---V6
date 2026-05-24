@@ -1,0 +1,9 @@
+file,total_nodes,unique_source_areas,unique_dest_areas,avg_adjacency_count,min_adjacency,max_adjacency,nodes_adjacency_1,avg_connectivity_score,connectivity_std,connectivity_was_static,orr_rows,isolated_nodes_high,status
+north_bangalore_risk.csv,4498,52,49,5.69,1,10,2,0.513,0.065,98% = 0.4 (FIXED),3,16,VALID
+south_bangalore_risk.csv,4249,64,62,5.65,1,10,3,0.514,0.067,98% = 0.4 (FIXED),5,0,VALID
+east_bangalore_risk.csv,3593,44,42,5.46,1,10,4,0.509,0.07,98% = 0.4 (FIXED),11,0,VALID
+west_bangalore_risk.csv,3698,40,40,5.93,2,10,0,0.519,0.064,98% = 0.4 (FIXED),3,0,VALID
+central_bangalore_risk.csv,3952,44,44,5.39,1,10,5,0.515,0.069,98% = 0.4 (FIXED),4,0,VALID
+southeast_it_corridor_risk.csv,3119,41,42,5.45,1,10,7,0.511,0.069,98% = 0.4 (FIXED),13,0,VALID
+airport_peripheral_risk.csv,643,12,12,5.19,2,8,0,0.507,0.071,98% = 0.4 (FIXED),0,5,VALID
+logistics_hightraffic_risk.csv,1344,25,31,5.55,2,8,0,0.518,0.073,98% = 0.4 (FIXED),4,0,VALID

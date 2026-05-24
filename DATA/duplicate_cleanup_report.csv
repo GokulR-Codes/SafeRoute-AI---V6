@@ -1,0 +1,9 @@
+file,original_rows,duplicates_found,final_rows,null_values_before,null_values_after,status
+north_bangalore_risk.csv,4498,0,4498,6525,3056,CLEAN
+south_bangalore_risk.csv,4249,0,4249,6774,3213,CLEAN
+east_bangalore_risk.csv,3593,0,3593,5292,2461,CLEAN
+west_bangalore_risk.csv,3698,0,3698,5688,3012,CLEAN
+central_bangalore_risk.csv,3952,0,3952,7091,3459,CLEAN
+southeast_it_corridor_risk.csv,3119,0,3119,4647,2304,CLEAN
+airport_peripheral_risk.csv,643,0,643,818,535,CLEAN
+logistics_hightraffic_risk.csv,1344,0,1344,2084,924,CLEAN

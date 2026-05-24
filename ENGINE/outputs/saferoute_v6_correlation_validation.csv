@@ -1,0 +1,12 @@
+check,col_a,col_b,pearson_r,expected,status
+Higher crime → higher road risk,score_crime,final_risk_score,0.2969,+,PASS
+Higher congestion → longer travel time,congestion_score,travel_time_estimate,0.5851,+,PASS
+Higher lighting → lower road risk,lighting_score,final_risk_score,-0.6651,-,PASS
+Higher CCTV → lower crime contribution,cctv_density_estimate,score_crime,-0.2666,-,PASS
+Higher isolation → higher road risk,isolated_area_score,final_risk_score,0.3209,+,PASS
+Higher commercial density → higher activity,commercial_density,activity_score,0.9649,+,PASS
+Higher connectivity → lower isolation,connectivity_score,isolated_area_score,-0.5068,-,PASS
+Higher congestion → higher road risk score,congestion_score,road_risk_score,-0.1267,+,FAIL
+Higher flood risk → longer travel time,flood_risk,travel_time_estimate,0.2449,+,PASS
+Higher signal density → higher congestion,traffic_signal_density,congestion_score,0.4627,+,PASS
+Higher intersection density → higher congestion,intersection_density,congestion_score,0.6427,+,PASS

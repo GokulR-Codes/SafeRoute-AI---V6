@@ -1,0 +1,10 @@
+factor,mean_score,base_weight,contribution
+lighting,0.9705,0.16,0.1553
+police,0.6814,0.12,0.0818
+crime,0.4464,0.17,0.0759
+cctv,0.2699,0.12,0.0324
+road,0.3199,0.08,0.0256
+activity,0.164,0.11,0.018
+poi,0.152,0.04,0.0061
+event,0.0633,0.06,0.0038
+infra,0.3033,0.0,0.0
