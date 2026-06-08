@@ -1,7 +1,7 @@
 from pymongo import MongoClient
+from ENGINE.config import MONGO_URI
 
-# Use your working connection string (with the admin user or fixed password)
-MONGO_URI = "mongodb+srv://1jb23cs163_admin:algUuOHtPdLc9nzM@cluster0.hc4wd.mongodb.net/?retryWrites=true&w=majority"
+# MONGO_URI is loaded from environment (.env or system env). Do not commit credentials.
 client = MongoClient(MONGO_URI)
 db = client["SAFEROUTE_AI"]
 collection = db["RiskDataBengaluru"]
