@@ -1,0 +1,48 @@
+============================================================
+SafeRoute Engine — Validation Report
+============================================================
+
+  [PASS] Graph is non-empty
+         32551 nodes, 15629 edges
+  [PASS] All nodes have lat/lng
+         OK
+  [PASS] All edges have risk_profile
+         OK
+  [PASS] Risk tensor is non-empty
+         15629 edges in tensor
+  [PASS] Tensor arrays have shape (24,)
+         OK
+  [PASS] No NaN values in tensor
+         OK
+  [PASS] Risk values in [0, 100]
+         OK
+  [PASS] Risk values are not all identical
+         std=5.9821, mean=71.98
+  [PASS] Edge DataFrame has required columns
+         OK
+  [PASS] No duplicate edge_ids
+         OK
+  [PASS] Tensor edge_ids match DataFrame edge_ids
+         OK
+  [PASS] Tensor covers >90% of graph edges
+         15629/15629 (100.0%)
+  [PASS] Graph risk_profile matches tensor (sampled)
+         OK (1000 checked)
+  [PASS] Output exists: graph_nodes.csv
+         2,154,290 bytes
+  [PASS] Output exists: graph_edges.csv
+         5,500,050 bytes
+  [PASS] Output exists: hourly_edge_weights.csv
+         50,470,387 bytes
+  [PASS] Output exists: risk_tensor.pkl
+         2,256,482 bytes
+  [PASS] Output exists: temporal_graph.pkl
+         7,496,095 bytes
+  [PASS] Output exists: zone_hourly_risk.csv
+         3,756 bytes
+  [PASS] Output exists: city_hourly_profile.csv
+         1,255 bytes
+
+============================================================
+Result: ALL CHECKS PASSED
+============================================================

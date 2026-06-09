@@ -1,0 +1,4 @@
+edge_id,type,severity,description
+E000010,Accident,0.7,Sample accident
+E000020,Construction,0.4,Road work
+E000030,Crime,0.8,Reported crime

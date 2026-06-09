@@ -5,7 +5,7 @@ from pymongo import MongoClient, GEOSPHERE
 # Replace with your MongoDB Atlas URI
 MONGO_URI = "mongodb+srv://1jb23cs163_admin:algUuOHtPdLc9nzM@cluster0.hc4wd.mongodb.net/?retryWrites=true&w=majority"
 DB_NAME = "SAFEROUTE_AI"
-COLLECTION_NAME = "RiskDataBengaluru"
+COLLECTION_NAME = "RiskDataBengaluru2"
 
 # List of your CSV files
 FILES_TO_IMPORT = [
@@ -19,7 +19,16 @@ FILES_TO_IMPORT = [
     'ENGINE/datasets/south_bangalore_risk.csv',
     'ENGINE/datasets/graph_edges.csv',
     'ENGINE/datasets/graph_nodes.csv',
-    'ENGINE/datasets/hourly_edge_weights.csv'
+    'ENGINE/datasets/hourly_edge_weights.csv',
+    'ENGINE/outputs/city_hourly_profile.csv',
+    'ENGINE/outputs/zone_hourly_risk.csv',
+    'ENGINE/outputs/saferoute_v6_correlation_validation.csv',
+    'ENGINE/outputs/saferoute_v6_factor_contributions.csv',
+    'ENGINE/outputs/saferoute_v6_heatmap_confident.csv',
+    'ENGINE/outputs/saferoute_v6_hourly_sweep.csv',
+    'ENGINE/outputs/saferoute_v6_risk_scores.csv',
+    'ENGINE/outputs/saferoute_v6_top_risk_segments.csv',
+    'ENGINE/outputs/saferoute_v6_zone_summary.csv'
 ]
 
 # All fields that need to be stored as numbers in MongoDB

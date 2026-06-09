@@ -1,0 +1,47 @@
+{
+  "safe_zones": [],
+  "danger_zones": [
+    {
+      "zone": "CENTRAL BANGALORE",
+      "node_count": 6674,
+      "centroid_lat": 12.979512873838777,
+      "centroid_lng": 77.59597191459395,
+      "label": "Danger Zone"
+    },
+    {
+      "zone": "EAST BANGALORE",
+      "node_count": 6850,
+      "centroid_lat": 12.990888408175183,
+      "centroid_lng": 77.6957603389781,
+      "label": "Danger Zone"
+    },
+    {
+      "zone": "SOUTH BANGALORE",
+      "node_count": 8282,
+      "centroid_lat": 12.909891936488771,
+      "centroid_lng": 77.5905496875151,
+      "label": "Danger Zone"
+    },
+    {
+      "zone": "SOUTHEAST / IT CORRIDOR",
+      "node_count": 5986,
+      "centroid_lat": 12.88552976411627,
+      "centroid_lng": 77.6708365763448,
+      "label": "Danger Zone"
+    },
+    {
+      "zone": "AIRPORT & PERIPHERAL ZONES",
+      "node_count": 1274,
+      "centroid_lat": 13.084388538461539,
+      "centroid_lng": 77.66844567503925,
+      "label": "Danger Zone"
+    },
+    {
+      "zone": "LOGISTICS / HIGH TRAFFIC ZONES",
+      "node_count": 2191,
+      "centroid_lat": 12.965334868096761,
+      "centroid_lng": 77.6479403404838,
+      "label": "Danger Zone"
+    }
+  ]
+}
