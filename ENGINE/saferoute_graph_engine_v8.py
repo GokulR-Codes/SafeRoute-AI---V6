@@ -52,8 +52,9 @@ logging.basicConfig(level=logging.INFO,
 log = logging.getLogger("SafeRoute-v8")
 
 # ─── Paths ────────────────────────────────────────────────────────────────────
-SRC = Path("/mnt/user-data/uploads")
-OUT = Path("/mnt/user-data/outputs")
+BASE_DIR = Path(__file__).parent
+SRC = BASE_DIR / "datasets"
+OUT = BASE_DIR / "outputs"
 OUT.mkdir(parents=True, exist_ok=True)
 
 _EDGE_CTR: List[int] = [0]
@@ -256,6 +257,8 @@ def main():
     nodes_df   = pd.read_csv(SRC / "graph_nodes.csv")
     edges_df   = pd.read_csv(SRC / "graph_edges.csv")
     weights_df = pd.read_csv(SRC / "hourly_edge_weights.csv")
+    if "u" in edges_df.columns and "v" in edges_df.columns:
+        edges_df = edges_df.rename(columns={"u": "source_node", "v": "destination_node"})
     log.info(f"  Nodes:{len(nodes_df):,}  Edges:{len(edges_df):,}  Weights:{len(weights_df):,}")
 
     # ── 2. Spatial node merge ─────────────────────────────────────────────────
@@ -290,6 +293,8 @@ def main():
     log.info("[4/14] Building directed graph...")
     G = nx.DiGraph()
     # Bulk node add
+    if "zone" not in nodes_df.columns: nodes_df["zone"] = "Unknown"
+    if "source_area" not in nodes_df.columns: nodes_df["source_area"] = "Unknown"
     _node_records = nodes_df[["node_id","lat","lng","zone","source_area"]].to_dict("records")
     G.add_nodes_from([
         (int(r["node_id"]), {"lat": float(r["lat"]), "lng": float(r["lng"]),

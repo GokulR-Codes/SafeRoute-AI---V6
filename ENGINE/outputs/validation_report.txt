@@ -35,13 +35,13 @@ SafeRoute Engine — Validation Report
   [PASS] Output exists: hourly_edge_weights.csv
          50,470,387 bytes
   [PASS] Output exists: risk_tensor.pkl
-         2,256,482 bytes
+         2,256,481 bytes
   [PASS] Output exists: temporal_graph.pkl
-         7,496,095 bytes
+         7,447,630 bytes
   [PASS] Output exists: zone_hourly_risk.csv
          3,756 bytes
   [PASS] Output exists: city_hourly_profile.csv
-         1,255 bytes
+         1,667 bytes
 
 ============================================================
 Result: ALL CHECKS PASSED
