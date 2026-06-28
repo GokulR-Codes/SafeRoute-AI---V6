@@ -2482,17 +2482,19 @@ def main(
     hour:       int = 22,
     chunk_size: int = 100_000,
     scenario:   str = "baseline",
+    use_db:     bool = True,
 ) -> None:
     """
-    Load all zone CSVs, run the v6.0 risk engine, save results.
+    Load risk data (from MongoDB or zone CSVs), run the v6.0 risk engine, save results.
 
     Parameters
     ──────────
-    data_dir   : directory containing all _risk.csv zone files
+    data_dir   : directory containing all _risk.csv zone files (CSV fallback)
     output_dir : where output CSVs are written
     hour       : simulation hour (0–23)
     chunk_size : rows per processing chunk
     scenario   : CalibrationEngine scenario name (default: 'baseline')
+    use_db     : if True, load from MongoDB first; fall back to CSVs on failure
     """
     out_path = Path(output_dir)
     out_path.mkdir(parents=True, exist_ok=True)
@@ -2507,27 +2509,43 @@ def main(
     print(f"  Scenario preset: {scenario}")
     print("━" * 70)
 
-    # ── 1. Load & merge all zone CSVs ────────────────────────────────────────
-    frames = []
-    for csv_file in ZONE_CSV_FILES:
-        path = Path(data_dir) / csv_file
-        if not path.exists():
-            print(f"  ⚠  Skipped (not found): {csv_file}")
-            continue
-        df = pd.read_csv(path, dtype=SCHEMA_DTYPES, low_memory=False)
+    # ── 1. Load risk data ─────────────────────────────────────────────────────
+    all_data = None
 
-        # Ensure direction column exists (derive from filename if missing)
-        if "direction" not in df.columns or df["direction"].isna().all():
-            direction = csv_file.split("_")[0]
-            df["direction"] = direction
+    # 1a. Try MongoDB first
+    if use_db:
+        try:
+            import sys, os
+            sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+            from DATABASE.db import get_risk_dataframe
+            all_data = get_risk_dataframe()
+            print(f"  ✔  Loaded {len(all_data):,} rows from MongoDB")
+        except Exception as db_err:
+            print(f"  ⚠  MongoDB unavailable ({db_err}), falling back to CSV…")
+            all_data = None
 
-        frames.append(df)
-        print(f"  ✔  Loaded {csv_file:40s}: {len(df):>7,} rows")
+    # 1b. CSV fallback
+    if all_data is None:
+        frames = []
+        for csv_file in ZONE_CSV_FILES:
+            path = Path(data_dir) / csv_file
+            if not path.exists():
+                print(f"  ⚠  Skipped (not found): {csv_file}")
+                continue
+            df = pd.read_csv(path, dtype=SCHEMA_DTYPES, low_memory=False)
 
-    if not frames:
-        raise FileNotFoundError(f"No zone CSV files found in {data_dir}")
+            # Ensure direction column exists (derive from filename if missing)
+            if "direction" not in df.columns or df["direction"].isna().all():
+                direction = csv_file.split("_")[0]
+                df["direction"] = direction
 
-    all_data = pd.concat(frames, ignore_index=True)
+            frames.append(df)
+            print(f"  ✔  Loaded {csv_file:40s}: {len(df):>7,} rows")
+
+        if not frames:
+            raise FileNotFoundError(f"No zone CSV files found in {data_dir}")
+
+        all_data = pd.concat(frames, ignore_index=True)
 
     # Fill any NaN in critical columns with sensible defaults
     all_data["road_type"]      = all_data["road_type"].fillna("secondary")

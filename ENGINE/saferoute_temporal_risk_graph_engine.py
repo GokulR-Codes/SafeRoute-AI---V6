@@ -691,7 +691,7 @@ class TemporalMemoryEngine:
 # DATA LOADER
 # ─────────────────────────────────────────────────────────────────────────────
 class DataLoader:
-    """Load and validate zone CSV datasets."""
+    """Load and validate zone CSV datasets (or fetch from MongoDB)."""
 
     DATASET_FILES = [
         "central_bangalore_risk.csv",
@@ -705,14 +705,30 @@ class DataLoader:
         "logistics_hightraffic_risk.csv",
     ]
 
-    def __init__(self, data_dir: str):
+    def __init__(self, data_dir: str, use_db: bool = True):
         self.data_dir = Path(data_dir)
+        self.use_db = use_db
 
     def load_all(self) -> Tuple[pd.DataFrame, List[str], List[str]]:
         """
-        Load all CSVs. Returns merged DataFrame, list of loaded files,
-        list of rejected files.
+        Load all risk data.  Returns merged DataFrame, list of loaded sources,
+        list of rejected sources.
+
+        If use_db is True, tries MongoDB first; falls back to CSVs on failure.
         """
+        # ── Try MongoDB first ─────────────────────────────────────────────
+        if self.use_db:
+            try:
+                import sys, os
+                sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+                from DATABASE.db import get_risk_dataframe
+                df = get_risk_dataframe()
+                log.info(f"Loaded {len(df):,} rows from MongoDB")
+                return df, ["MongoDB:RiskData6Areas"], []
+            except Exception as db_err:
+                log.warning(f"MongoDB unavailable ({db_err}), falling back to CSV…")
+
+        # ── CSV fallback ──────────────────────────────────────────────────
         frames = []
         loaded = []
         rejected = []

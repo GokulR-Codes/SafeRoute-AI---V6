@@ -65,19 +65,37 @@ class SafeRouteGraph:
     to the single lowest-risk edge so the graph is a simple directed graph.
     """
 
-    def __init__(self, csv_paths: List[str], risk_column: str = "road_risk_score"):
+    def __init__(self, csv_paths: List[str] = None, risk_column: str = "road_risk_score",
+                 use_db: bool = True):
         self.risk_column = risk_column
-        self._build(csv_paths)
+        self._build(csv_paths or [], use_db=use_db)
 
     # -- construction ----------------------------------------------------------
 
-    def _build(self, csv_paths: List[str]) -> None:
+    def _build(self, csv_paths: List[str], use_db: bool = True) -> None:
         frames = []
-        for p in csv_paths:
-            df = pd.read_csv(p, low_memory=False)
-            if self.risk_column not in df.columns:
-                raise ValueError(f"Column '{self.risk_column}' not found in {p}")
-            frames.append(df)
+
+        # Try MongoDB first
+        if use_db and not csv_paths:
+            try:
+                import sys, os
+                sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+                from DATABASE.db import get_risk_dataframe
+                db_df = get_risk_dataframe()
+                if self.risk_column not in db_df.columns:
+                    raise ValueError(f"Column '{self.risk_column}' not in MongoDB data")
+                frames.append(db_df)
+                print(f"  ✔  A* Router: loaded {len(db_df):,} rows from MongoDB")
+            except Exception as db_err:
+                print(f"  ⚠  A* Router: MongoDB unavailable ({db_err}), using CSVs…")
+
+        # CSV fallback
+        if not frames:
+            for p in csv_paths:
+                df = pd.read_csv(p, low_memory=False)
+                if self.risk_column not in df.columns:
+                    raise ValueError(f"Column '{self.risk_column}' not found in {p}")
+                frames.append(df)
 
         data = pd.concat(frames, ignore_index=True)
 
